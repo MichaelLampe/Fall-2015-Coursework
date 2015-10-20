@@ -1,0 +1,130 @@
+<html>
+
+<head>
+	<meta name="description" content="Assignment3">
+	<meta name="keywords" content="CS 559 Assignment, UW-Madison">
+	<meta name="author" content="Michael Lampe">
+	
+	<script>
+		function app() {
+			var theCanvas = document.getElementById('disco');
+        	var myContext = theCanvas.getContext('2d');
+			
+			function draw(){
+	            myContext.clearRect(0, 0, theCanvas.width, theCanvas.height);
+				
+				tree.LookAtX = LookAtX.value;
+				tree.LookAtY = LookAtY.value;
+				tree.LookAtZ = LookAtZ.value;
+	
+				tree.LookFromX = LookFromX.value;
+				tree.LookFromY = LookFromY.value;
+				tree.LookFromZ = LookFromZ.value;
+	
+				
+				//tree.windspeed = Wind.value;
+				
+				myContext.save();
+				tree.draw();
+				myContext.restore();
+				
+				window.requestAnimationFrame(draw);
+			}
+			
+			
+			var LookAtX = document.getElementById('LookAtX');
+			var LookAtY = document.getElementById('LookAtY');
+			var LookAtZ = document.getElementById('LookAtZ');
+
+			var LookFromX = document.getElementById('LookFromX');
+			var LookFromY = document.getElementById('LookFromY');
+			var LookFromZ = document.getElementById('LookFromZ');
+
+			
+			var Wind = document.getElementById('Wind');
+			
+			
+			
+			
+			var tree = new Tree(myContext);
+			
+			window.requestAnimationFrame(draw);
+		}
+		
+	window.onload = app;
+	
+	</script>
+	
+	<style type="text/css">
+		canvas { 
+			border: 1px solid black; 
+		}
+		
+		body {
+			width:1200px;
+			height:600px;
+			margin: 0px auto;
+			margin-top: 5px;
+		}
+		
+		h1 {
+			text-align: center;
+		}
+	</style>
+	
+</head>
+
+<body>
+	
+	<h1>
+	Michael's Project Number 3D
+	</h1>
+	
+	<!-- Canvas -->
+	<canvas id="disco" width="1200" height="600">
+		
+	</canvas>	
+
+	<!-- Sliders -->
+	<span style="display: inline-block; width: 120px;">FOV</span>
+	<input id="FOV" type="range" width="500" min="5" max="90">
+	<br>
+	
+	<!-- Look at -->
+	<span style="display: inline-block; width: 120px;">Look At X</span>
+	<input id="LookAtX" type="range" width="500" min="-10" max="10" value="0">
+	<br>
+	<span style="display: inline-block; width: 120px;">Look At Y</span>
+	<input id="LookAtY" type="range" width="500" min="-10" max="10" value="0">
+	<br>
+	<span style="display: inline-block; width: 120px;">Look At Z</span>
+	<input id="LookAtZ" type="range" width="500" min="-10" max="10" value="0">
+	<br>
+	
+	<!-- Look from -->
+	<span style="display: inline-block; width: 120px;">Look From X</span>
+	<input id="LookFromX" type="range" width="500" min="-10" max="10" value="0">
+	<br>
+	<span style="display: inline-block; width: 120px;">Look From Y</span>
+	<input id="LookFromY" type="range" width="500" min="-10" max="10" value="0">
+	<br>
+	<span style="display: inline-block; width: 120px;">Look From Z</span>
+	<input id="LookFromZ" type="range" width="500" min="-10" max="10" value="-1">
+	<br>
+	
+	
+	<!-- Scene Controls -->
+	<span style="display: inline-block; width: 120px;">Wind Speed</span>
+	<input id="Wind" type="range" width="500" min="0" max="1">
+	<br>
+
+
+
+	
+	<script src="http://graphics.cs.wisc.edu/Courses/559-f2015/Examples/P3-Yusef/twgl-full.js"></script>
+	<script src="Tree.js"></script>
+
+</body>
+	
+	
+</html>

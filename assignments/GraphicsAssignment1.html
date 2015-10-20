@@ -1,0 +1,188 @@
+<html>
+	
+	<head>
+		<meta name="description" content="Assignment1">
+		<meta name="keywords" content="CS 559 Assignment, UW-Madison">
+		<meta name="author" content="Michael Lampe">
+		
+		<title>	Graphics Assignment 1 </title>
+
+    <script type="text/javascript">
+        function getRandomInteger(minimum, maximum){
+        	return Math.floor((Math.random() * maximum) + minimum);
+        }
+
+   	    function draw(){
+	        var canvas = document.getElementById('disco');
+	        if (canvas.getContext) {
+	        	var SKY = "rgba(51,204,255,1)";
+	        	var GROUND = "rgba(153,102,51,1)";
+
+		        var ctx = canvas.getContext('2d');
+
+		        // Ground
+		        ctx.fillStyle = GROUND;
+		        ctx.fillRect(0,600,1200,1600);
+		        // Sky
+		        ctx.fillStyle = SKY;
+		        ctx.fillRect(0,0,1200,600);
+
+		        // Sun
+		        ctx.fillStyle = "yellow";
+		        ctx.beginPath();
+		     	ctx.arc(100,100,50,0,2*Math.PI);
+		     	ctx.closePath();
+		     	ctx.fill();
+
+		        // Clouds
+		        function cloud(x_location, y_location, size){
+		        	var cloud = new Path2D();
+		        	var size = size;
+
+		        	var x_array = 
+		        	[x_location,
+		        	x_location+size,
+		        	x_location+size*2,
+		        	x_location+size*3,
+		        	x_location+size*0.5,
+		        	x_location+size*1.5,
+		        	x_location+size*2.5]
+
+		        	var y_array = [y_location,
+		        	y_location,
+		        	y_location,
+		        	y_location,
+		        	y_location-size,
+		        	y_location-size,
+		        	y_location-size];
+		        	// Create a cloud by overlapping circles
+		        	for (i = 0; i < x_array.length; i++){
+		        		x = x_array[i];
+		        		y = y_array[i];
+			        	ctx.fillStyle = "white";
+			        	ctx.beginPath();
+			        	ctx.arc(x,y,size,0,2*Math.PI);
+			        	ctx.fill();
+						// Learning experience, if you don't want to connect your clouds via lines, close the path.			        	
+			        	ctx.closePath();
+		        	}
+		        }
+		        var numberOfClouds = getRandomInteger(1,15);
+				for (a = 0; a < numberOfClouds; a++) {
+					cloud(getRandomInteger(0,canvas.width),getRandomInteger(0,400),getRandomInteger(5,50));
+		    	}
+
+		        // House
+		        	// Body
+		        ctx.fillStyle = "green";
+			    ctx.fillRect(500,400,200,200);	
+
+			    	// Roof
+			    var triangle = new Path2D();
+			    ctx.fillStyle = "red";
+			    triangle.moveTo(480,400);
+			    triangle.lineTo(600,300);
+			    triangle.lineTo(720,400);
+			    ctx.fill(triangle);
+
+			    	// Door
+			    ctx.fillStyle = "brown";
+			    ctx.fillRect(600,500,50,100)
+
+			    	// Window
+			    ctx.fillStyle = "yellow";
+			    ctx.fillRect(525,500,50,50)
+
+			    ctx.fillStyle = "black";
+			    ctx.fillRect(549,500,2,50);
+			    ctx.fillRect(525,524,50,2);
+
+			    // Outline house items
+			    ctx.strokeRect(525,500,50,50);
+			    ctx.strokeRect(600,500,50,100)
+			    
+			    var house = new Path2D();
+			    house.moveTo(500,400);
+			    house.lineTo(500,600);
+			    house.lineTo(700,600);
+			    house.lineTo(700,400);
+			    ctx.stroke(house);
+
+			   	var triangle = new Path2D();
+			    triangle.moveTo(480,400);
+			    triangle.lineTo(600,300);
+			    triangle.lineTo(720,400);
+			    ctx.stroke(triangle);
+
+				// Underground cave
+				ctx.beginPath();
+				ctx.fillStyle = SKY;
+				ctx.moveTo(100,1300);
+				ctx.quadraticCurveTo(1000,500,1000,1300);
+				ctx.fill();
+				ctx.closePath();
+
+		        // Well
+		        	// Above ground part
+		        	ctx.fillStyle = "grey";
+		        	ctx.fillRect(900,560,60,40);
+		        	ctx.fillStyle = "brown";
+		        	ctx.fillRect(928,510,4,50);
+
+		        	ctx.beginPath();
+		        	var well_roof = new Path2D();
+		        	well_roof.moveTo(890,530);
+		        	well_roof.lineTo(930,510);
+		        	well_roof.lineTo(970,530);
+		        	ctx.strokeStyle = "brown";
+		        	ctx.lineWidth = 15;
+		        	ctx.stroke(well_roof);
+		        	ctx.closePath();
+		           	// Hole into ground
+		        	ctx.fillStyle = SKY;
+		        	ctx.fillRect(910,600,40,700);
+
+		        	// Bucket
+		        		// Bucket rope
+		        		ctx.fillStyle = "brown";
+		        		ctx.fillRect(928,600,4,790);
+		        		// Actual water holding part 
+		        		ctx.fillStyle = "grey";
+		        		ctx.fillRect(915,1400,30,30);
+		        		// Bucket handle
+		        		ctx.beginPath();
+		        		ctx.arc(930,1400,10,0,Math.PI,true);
+		        		ctx.strokeStyle = "grey";
+		        		ctx.lineWidth = 5;
+		        		ctx.stroke();
+		        		ctx.closePath();
+					
+					// Undeground Lake
+					ctx.beginPath();
+					ctx.fillStyle = "rgba(0,102,255,0.7)";
+					ctx.moveTo(1000,1300);
+					ctx.quadraticCurveTo(600,2500,100,1300);
+					ctx.fill();
+					ctx.closePath();
+        }
+      }
+    </script>
+	
+		<style type="text/css">
+			canvas { 
+				border: 1px solid black; 
+			}
+			body {
+				width:1200px;
+				height:1600px;
+				margin: 0px auto;
+				margin-top: 5px;
+			}
+		</style>
+	</head>
+	
+	<body onload="draw();">
+		<canvas id="disco" width="1200" height="1600">
+		</canvas>
+	</body>
+</html>

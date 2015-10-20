@@ -1,0 +1,20 @@
+/*
+Colors https://color.adobe.com/Vitamin-C-color-theme-492199/edit/?copy=true
+/*
+
+html, body {
+	max-width: 100%;
+	overflow-x: hidden;
+}
+
+body {
+	width:100%;
+	height:100%;
+}
+
+.block {
+	background-color: #004358;
+	width: 100%;
+	height: 100%;
+	display: block;
+}

@@ -1,0 +1,333 @@
+* {
+	margin:0px;
+	overflow-x: hidden;
+}
+
+html, body {
+	max-width: 100%;
+	overflow-x: hidden;
+}
+
+body {
+	/* Background pattern from subtlepatterns.com */
+	background-image: url("img/small_steps.png");
+	background-repeat: repeat;
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+.overlay {
+	background-color: #F1F1F1;
+	position: absolute;
+	top:0%;
+	height: 100%;
+	width: 100%;
+}
+
+.transparent {
+	opacity: 0.7;
+	left:0%;
+}
+
+
+/*
+Menu
+*/
+#menuButton {
+	position: fixed;
+	display: block;
+	top:10%;
+	left:47%;
+	height: 6vw;
+	width: 6vw;
+	opacity: 0.9;
+	z-index: 0;
+	font-size: 300%;
+	text-align: center;
+	color: #161616;
+	line-height: 6vw;
+	
+	/* Can't select the text */
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+
+#menuButton:active {
+	cursor: pointer;
+}
+#menuButton:hover {
+	font-size: 350%;
+	 -webkit-transition: all ease-in 0.1s;
+    -moz-transition: all ease-in 0.1s;
+    -o-transition: all ease-in 0.1s;
+    -ms-transition: all ease-in 0.1s;
+    transition: all ease-in 0.1s;
+	cursor: pointer;
+	
+}
+
+.footer {
+	position: absolute;
+	top: 84%;
+	height: 16%;
+	padding: 0%;
+	margin: 0%;
+	width: 100%;
+	background-color: #161616;
+}
+
+#menu-overlay {
+	width: 100vw;
+	height: 100vh;
+	background-color: #3498DB;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+#menu-overlay {
+	list-style-type: none;
+	text-align: center;
+	letter-spacing: 0.1em;
+}
+.menu-overlay-inactive {
+	opacity: 0;
+	z-index: 0;
+	-webkit-transition: opacity ease-in 0.5s;
+    -moz-transition: opacity ease-in 0.5s;
+    -o-transition: opacity ease-in 0.5s;
+    -ms-transition: opacity ease-in 0.5s;
+    transition: opacity ease-in 0.5s;
+}
+.menu-overlay-active {
+	opacity: 0.9;
+	z-index: 9001;
+	-webkit-transition: opacity ease-in 0.5s;
+    -moz-transition: opacity ease-in 0.5s;
+    -o-transition: opacity ease-in 0.5s;
+    -ms-transition: opacity ease-in 0.5s;
+    transition: opacity ease-in 0.5s;
+}
+
+#menuCloseButton {
+	text-align: center;
+	position: relative;
+	float: right;
+	margin-right: 5%;
+}
+
+#menuCloseButton h1 {
+	position:relative;
+	top:50%;
+}
+
+/*
+Color Theme: https://color.adobe.com/create/color-wheel/?copy=true&base=1&rule=Custom&selected=0&name=Copy%20of%20Flat%20UI&mode=rgb&rgbvalues=0.172549,0.243137,0.313725,0.905882,0.298039,0.235294,0.92549,0.941176,0.945098,0.203922,0.596078,0.858824,0.160784,0.501961,0.72549&swatchOrder=0,1,2,3,4
+*/
+.panel {
+	height: 100%;
+	width: 33%;
+	position: absolute;
+	overflow: hidden;
+}
+
+.panel h1 {
+	position: relative;
+	margin-top: 55%;
+	text-align: center;
+	font-size: 5vw;
+}
+
+.panel p {
+	position: relative;
+	text-align: center;
+	margin-top: 10%;
+	font-size: 2vw;
+}
+
+.background {
+	position: absolute;
+	height: 100%;
+	width: -50%;
+	-ms-transform: skewX(-7deg); /* IE 9 */
+    -webkit-transform: skewX(-7deg); /* Safari */
+    transform: skewX(-7deg);
+}
+
+/* 
+Getting the backgrounds to move correctly.
+*/
+.active-right {
+	width: 71%;
+	left: 38%;
+	-webkit-transition: width ease-in 0.5s, left ease-in 0.5s;
+    -moz-transition: width ease-in 0.5s, left ease-in 0.5s;
+    -o-transition: width ease-in 0.5s, left ease-in 0.5s;
+    -ms-transition: width ease-in 0.5s, left ease-in 0.5s;
+    transition: width ease-in 0.5s, left ease-in 0.5s;
+}
+
+.active-left {
+	width: 71%;
+	left: -11%;
+	-webkit-transition: width ease-in 0.5s, left ease-in 0.5s;
+    -moz-transition: width ease-in 0.5s, left ease-in 0.5s;
+    -o-transition: width ease-in 0.5s, left ease-in 0.5s;
+    -ms-transition: width ease-in 0.5s, left ease-in 0.5s;
+    transition: width ease-in 0.5s, left ease-in 0.5s;
+}
+
+.inactive-right {
+	width: 0%;
+	left: 49%;
+	-webkit-transition: width ease-in 0.2s, left ease-in 0.2s;
+    -moz-transition: width ease-in 0.2s, left ease-in 0.2s;
+    -o-transition: width ease-in 0.2s, left ease-in 0.2s;
+    -ms-transition: width ease-in 0.2s, left ease-in 0.2s;
+    transition: width ease-in 0.2s, left ease-in 0.2s;
+}
+
+.inactive-left {
+	width: 0%;
+	left: 49%;
+	-webkit-transition: width ease-in 0.2s, left ease-in 0.2s;
+    -moz-transition: width ease-in 0.2s, left ease-in 0.2s;
+    -o-transition: width ease-in 0.2s, left ease-in 0.2s;
+    -ms-transition: width ease-in 0.2s, left ease-in 0.2s;
+    transition: width ease-in 0.2s, left ease-in 0.2s;
+}
+
+/*
+Changes text so that the text color is not messed up with background color change
+*/
+
+/* DBC850 Looks good */
+.active-text {
+	color: #ECF0F1 !important;
+	-webkit-transition: all ease-in 0.5s;
+    -moz-transition: all ease-in 0.5s;
+    -o-transition: all ease-in 0.5s;
+    -ms-transition: all ease-in 0.5s;
+    transition: all ease-in 0.5s;
+}
+
+.inactive-text-left {
+	opacity: 1 !important;
+	color: #2C3E50 !important;
+	-webkit-transition: all ease-in 0.5s;
+    -moz-transition: all ease-in 0.5s;
+    -o-transition: all ease-in 0.5s;
+    -ms-transition: all ease-in 0.5s;
+    transition: all ease-in 0.5s;
+}
+
+.inactive-text-right {
+	opacity: 1 !important;
+	color: #E74C3C!important;
+	-webkit-transition: all ease-in 0.5s;
+    -moz-transition: all ease-in 0.5s;
+    -o-transition: all ease-in 0.5s;
+    -ms-transition: all ease-in 0.5s;
+    transition: all ease-in 0.5s;
+}
+
+.hide-text {
+	opacity: 0 !important;
+	-webkit-transition: all ease-in 0.5s;
+    -moz-transition: all ease-in 0.5s;
+    -o-transition: all ease-in 0.5s;
+    -ms-transition: all ease-in 0.5s;
+    transition: all ease-in 0.5s;
+}
+
+
+
+/*
+Set the background colors.
+*/
+#left-background {
+	background-color: #2C3E50;
+	opacity: 1;
+	-webkit-transition: all ease-in 0.5s;
+    -moz-transition: all ease-in 0.5s;
+    -o-transition: all ease-in 0.5s;
+    -ms-transition: all ease-in 0.5s;
+    transition: all ease-in 0.5s;
+}
+#right-background {
+	background-color:#E74C3C;
+	opacity: 1;
+	-webkit-transition: all ease-in 0.5s;
+    -moz-transition: all ease-in 0.5s;
+    -o-transition: all ease-in 0.5s;
+    -ms-transition: all ease-in 0.5s;
+    transition: all ease-in 0.5s;
+}
+
+/*
+Content panels
+*/
+
+.left-panel {
+	color: #2C3E50;
+	left: 0%;
+	padding-left: 5%;
+	width: 33%;
+}
+
+.right-panel {
+	color: #E74C3C;
+	padding-right: 5%;
+	left: 62%;
+	width: 33%;
+}
+
+/*
+The divider pane in the middle
+*/
+#divider-panel {
+	position: absolute;
+	height:100%;
+	background-color: #131313;
+	/* Only gets a width when debugging as it makes it easier	*/
+	width: 0px;
+	margin-left:5%;
+	margin-right:5%;
+	-ms-transform: skewX(-7deg); /* IE 9 */
+    -webkit-transform: skewX(-7deg); /* Safari */
+    transform: skewX(-7deg);
+}
+
+.divider-active-right {
+	left: 33%;
+	-webkit-transition: left ease-in 0.6s;
+    -moz-transition: left ease-in 0.6s;
+    -o-transition: left ease-in 0.6s;
+    -ms-transition: left ease-in 0.6s;
+    transition: left ease-in 0.6s;
+}
+
+.divider-active-left {
+	left: 55%;
+	-webkit-transition: left ease-in 0.6s;
+    -moz-transition: left ease-in 0.6s;
+    -o-transition: left ease-in 0.6s;
+    -ms-transition: left ease-in 0.6s;
+    transition: left ease-in 0.6s;
+}
+
+.divider-inactive {
+	left: 44%;
+	-webkit-transition: left ease-in 0.2s;
+    -moz-transition: left ease-in 0.2s;
+    -o-transition: left ease-in 0.2s;
+    -ms-transition: left ease-in 0.2s;
+    transition: left ease-in 0.2s;
+	
+}

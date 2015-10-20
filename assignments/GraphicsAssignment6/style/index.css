@@ -1,0 +1,14 @@
+canvas { 
+	border: 1px solid black; 
+}
+
+body {
+	width:1200px;
+	height:600px;
+	margin: 0px auto;
+	margin-top: 5px;
+}
+
+h1 {
+	text-align: center;
+}

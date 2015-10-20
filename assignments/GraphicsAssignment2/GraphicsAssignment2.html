@@ -1,0 +1,83 @@
+<html>
+	
+<head>
+	<meta name="description" content="Assignment2">
+	<meta name="keywords" content="CS 559 Assignment, UW-Madison">
+	<meta name="author" content="Michael Lampe">
+		
+	<title>	Graphics Assignment 2 </title>
+	<script>
+		function app() {
+			       // variables for the "program" - kept inside rather than global
+        var theCanvas;
+        var myContext;
+		var slider;
+
+        // animation loop - clear, update, draw, schedule the next iteration
+        function draw() {
+			// Clears the canvas - all good
+			var speed = slider.value;
+            myContext.clearRect(0, 0, theCanvas.width, theCanvas.height);
+			myContext.save();
+			treadmill.speed = speed;
+			treadmill.draw();
+			myContext.restore();
+			
+            myContext.save();
+			man.speed = speed;
+			man.draw();
+            myContext.restore();
+			
+			myContext.save();
+			computer.speed = speed;
+			computer.draw();
+			myContext.restore();
+			
+            window.requestAnimationFrame(draw);
+        }
+
+        // set up the elements
+        theCanvas = document.getElementById('disco');
+        myContext = theCanvas.getContext('2d');
+		slider = document.getElementById('slider');
+
+        // Make a stick figure.
+        var man = new StickFigure(myContext,150,550,2);
+		var treadmill = new Treadmill(myContext,15,0,theCanvas.height-50,theCanvas.width,2);
+    	window.requestAnimationFrame(draw);
+		var computer = new Computer(myContext,2);
+	}
+		
+	window.onload = app;		
+	</script>
+	<!-- Basic CSS styling to setup a nice view.  -->
+	<style type="text/css">
+			canvas { 
+				border: 1px solid black; 
+			}
+			body {
+				width:1200px;
+				height:800px;
+				margin: 0px auto;
+				margin-top: 5px;
+				background-color: #C3C3C3;
+			}
+			#slider {
+				width: 500px;
+			}
+	</style>
+		
+	<body>
+		<canvas id="disco" width="1200" height="800">
+
+		</canvas>
+		<p>
+		Adjust Speed
+		</p>
+		<input id="slider" type="range" min="1" max="9" value="2"/>
+		
+		<script src="StickFigure.js"></script>
+		<script src="Treadmill.js"></script>
+		<script src="Computer.js"></script>
+	</body>
+</html>

@@ -1,0 +1,136 @@
+<html>
+
+<head>
+	<meta name="description" content="Assignment4">
+	<meta name="keywords" content="CS 559 Assignment, UW-Madison">
+	<meta name="author" content="Michael Lampe">
+	
+	<script>
+		function app() {
+			var theCanvas = document.getElementById('disco');
+        	var myContext = theCanvas.getContext('2d');
+			
+			function draw(){
+	            myContext.clearRect(0, 0, theCanvas.width, theCanvas.height);
+				
+				script.FOV = FOV.value;
+				script.LookAtX = LookAtX.value;
+				script.LookAtY = LookAtY.value;
+				script.LookAtZ = LookAtZ.value + 0.1;
+	
+				script.LookFromX = LookFromX.value;
+				script.LookFromY = LookFromY.value;
+				script.LookFromZ = LookFromZ.value + 0.1;
+				
+				script.shapeOutlines = outlines.checked;
+				script.orderShapes = order.checked;
+				script.lights = lights.checked;
+				
+				myContext.save();
+				script.draw();
+				myContext.restore();
+				
+				
+				window.requestAnimationFrame(draw);
+			}
+	
+			// Sliders
+			var FOV = document.getElementById('FOV');	
+			
+			var LookAtX = document.getElementById('LookAtX');
+			var LookAtY = document.getElementById('LookAtY');
+			var LookAtZ = document.getElementById('LookAtZ');
+
+			var LookFromX = document.getElementById('LookFromX');
+			var LookFromY = document.getElementById('LookFromY');
+			var LookFromZ = document.getElementById('LookFromZ');
+	
+			var outlines = document.getElementById('outlines');
+			var order = document.getElementById('shapes');
+			var lights = document.getElementById('lights');
+			order.checked = true;
+			outlines.checked = true;
+			lights.checked = true;
+
+			var script = new Script(myContext,1200,600);
+			
+			window.requestAnimationFrame(draw);
+		}
+		
+	window.onload = app;
+		
+	</script>
+	
+	<style type="text/css">
+		canvas { 
+			border: 1px solid black; 
+		}
+		
+		body {
+			width:1200px;
+			height:600px;
+			margin: 0px auto;
+			margin-top: 5px;
+		}
+		
+		h1 {
+			text-align: center;
+		}
+	</style>
+	
+</head>
+
+<body>
+	
+	<h1>
+	Michael's Project Number 4
+	</h1>
+	
+	<!-- Canvas -->
+	<canvas id="disco" width="1200" height="600">
+		
+	</canvas>
+
+	<!-- Sliders -->
+	<span style="display: inline-block; width: 120px;">FOV</span>
+	<input id="FOV" type="range" width="500" min="5" max="70" value="35">
+	<br>
+<!-- Look at -->
+	<span style="display: inline-block; width: 120px;">Look At X</span>
+	<input id="LookAtX" type="range" width="500" min="-15" max="15" value="0">
+	<br>
+	<span style="display: inline-block; width: 120px;">Look At Y</span>
+	<input id="LookAtY" type="range" width="500" min="-15" max="15" value="5">
+	<br>
+	<span style="display: inline-block; width: 120px;">Look At Z</span>
+	<input id="LookAtZ" type="range" width="500" min="-5" max="5" value="0">
+	<br>
+	
+	<!-- Look from -->
+	<span style="display: inline-block; width: 120px;">Look From X</span>
+	<input id="LookFromX" type="range" width="500" min="-55" max="55" value="0">
+	<br>
+	<span style="display: inline-block; width: 120px;">Look From Y</span>
+	<input id="LookFromY" type="range" width="500" min="-60" max="60" value="20">
+	<br>
+	<span style="display: inline-block; width: 120px;">Look From Z</span>
+	<input id="LookFromZ" type="range" width="500" min="-5" max="5" value="5">
+	<br>
+
+	<!-- Check Boxes -->
+	<input type="checkbox" id="outlines" value="true">
+	Shape outlines
+	<br>
+	
+	<input type="checkbox" id="shapes" value="true">
+	Order shapes
+	<br>
+	
+	<input type="checkbox" id="lights" value="true">
+	Lights
+	<br>
+		
+	<script src="http://graphics.cs.wisc.edu/Courses/559-f2015/Examples/P3-Yusef/twgl-full.js"></script>
+	<script src="Script.js"></script>
+
+</body>

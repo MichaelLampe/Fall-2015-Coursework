@@ -1,0 +1,65 @@
+<html>
+
+<head>
+	<meta name="description" content="Assignment6">
+	<meta name="keywords" content="CS 559 Assignment, UW-Madison,WebGl">
+	<meta name="author" content="Michael Lampe">
+	
+	<link rel="stylesheet" type="text/css" href="style/index.css">
+	
+</head>
+
+<body>
+	
+	<h1>
+	Michael's Project Number 6
+	</h1>
+	
+	<!-- Canvas -->
+	<canvas id="disco" width="1200" height="600">
+		
+	</canvas>
+
+	<!-- Sliders -->
+	<span style="display: inline-block; width: 120px;">FOV</span>
+	<input id="FOV" type="range" width="500" min="5" max="70" value="65">
+	<br>
+<!-- Look at -->
+	<span style="display: inline-block; width: 120px;">Look At X</span>
+	<input id="LookAtX" type="range" width="500" min="-15" max="15" value="0">
+	<br>
+	<span style="display: inline-block; width: 120px;">Look At Y</span>
+	<input id="LookAtY" type="range" width="500" min="-15" max="15" value="5">
+	<br>
+	<span style="display: inline-block; width: 120px;">Look At Z</span>
+	<input id="LookAtZ" type="range" width="500" min="-5" max="5" value="0">
+	<br>
+	
+	<!-- Look from -->
+	<span style="display: inline-block; width: 120px;">Look From X</span>
+	<input id="LookFromX" type="range" width="500" min="-55" max="55" value="0">
+	<br>
+	<span style="display: inline-block; width: 120px;">Look From Y</span>
+	<input id="LookFromY" type="range" width="500" min="-60" max="60" value="10">
+	<br>
+	<span style="display: inline-block; width: 120px;">Look From Z</span>
+	<input id="LookFromZ" type="range" width="500" min="-5" max="5" value="5">
+	<br>
+
+	<!-- Check Boxes -->
+	<input type="checkbox" id="outlines" value="true">
+	Shape outlines
+	<br>
+	
+	<input type="checkbox" id="shapes" value="true">
+	Order shapes
+	<br>
+	
+	<input type="checkbox" id="lights" value="true">
+	Lights
+	<br>
+	
+	<script src="http://graphics.cs.wisc.edu/Courses/559-f2015/Examples/P3-Yusef/twgl-full.js"></script>
+	<script src="javascript/script.js"></script>
+
+</body>

@@ -1,0 +1,23 @@
+<html>
+	<head>
+		To Do List
+		<link rel="stylesheet" type="text/css" href="style.css">
+	</head>
+
+	<body>
+	<!-- Input form for a single task -->
+		<form>
+			Task Name: 
+			<input id="taskText" type="text" name="task">
+			&nbsp;&nbsp;&nbsp;&nbsp;Due date:
+			<input id="dateInput" type="date" name="due" value="">
+			&nbsp;&nbsp;&nbsp;&nbsp;Priority:
+			<input id="taskPriority" type="range" name="priority" min="1" max="9">
+			<input id="addTask" type="button" value="Add task">
+		</form>
+		<div id="items">
+
+		</div>
+		<script src="script.js"></script>
+	</body>
+</html>
