@@ -30,7 +30,44 @@
   -- that's the only way I know to load them without either
   -- sticking them in JavaScript strings, or using a web server
   -->
+<script id="house-vs" type="notjs">
+// specialized shader for the simple cube
+// we assume that the model matrix works as the normal
+//      matrix - this only is try if the model matrix
+//      it a rotate/translate
+//      (uniform scale is OK since we re-normalize)
+// color is solid
+// simple lighting
+    precision highp float;
 
+    attribute vec3 vpos;
+    attribute vec3 vnormal;
+    attribute vec3 inColor;
+    varying vec3 outColor;
+
+    uniform mat4 view;
+    uniform mat4 proj;
+    uniform mat4 model;
+    uniform vec3 lightdir;
+
+
+    void main(void) {
+        gl_Position = proj * view * model * vec4(vpos, 1.0);
+        vec4 normal = normalize(model * vec4(vnormal,0.0));
+        float diffuse = .5 + .5*abs(dot(normal, vec4(lightdir,0.0)));
+        outColor = inColor * diffuse;
+    }
+</script>
+<script id="house-fs" type="notjs">
+// simple shader that does vertex coloring
+//  (e.g. the vertex shader figures the lighting
+// note this is used for more than just the cube
+    precision highp float;
+    varying vec3 outColor;
+    void main(void) {
+        gl_FragColor = vec4(outColor, 1.0);
+    }
+</script>
 <script id="cube-vs" type="notjs">
 // specialized shader for the simple cube
 // we assume that the model matrix works as the normal
