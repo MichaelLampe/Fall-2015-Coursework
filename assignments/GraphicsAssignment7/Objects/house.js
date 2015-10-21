@@ -18,7 +18,7 @@
  3) there are things that are to be defined for each cube instance
  */
 var grobjects = grobjects || [];
-
+var heloLandingSites = heloLandingSites || [];
 // allow the two constructors to be "leaked" out
 var House = undefined;
 
@@ -45,6 +45,8 @@ var shaderProgram = undefined;
         this.houseColors = houseColors;
         this.houseDimensions = houseDimensions;
         this.doorLocation = doorLocation;
+        this.helipad = true;
+        this.helipadAltitude = houseDimensions[1] + houseDimensions[1]*0.5 - 0.5;
         
         /*
             Declare buffer here... 
@@ -197,7 +199,10 @@ for (var x = 1; x <= numberOfHouses/4; x++){
         var height = Math.floor(Math.random()*4 + 1);
         var depth = Math.floor(Math.random()*4 + 1);
         var houseDimensions = [width,height,depth];
-        grobjects.push(new House(houseName, [-houseGrid*x,0.5,-houseGrid*y], houseSize, houseColors, houseDimensions, doorLocation));
+        var newHouse = new House(houseName, [-houseGrid*x,0.5,-houseGrid*y], houseSize, houseColors, houseDimensions, doorLocation);
+        grobjects.push(newHouse);
+        heloLandingSites.push(newHouse);
+        
     }   
 }
 

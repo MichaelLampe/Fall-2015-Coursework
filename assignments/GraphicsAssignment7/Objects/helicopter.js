@@ -197,7 +197,7 @@ an example of a more complex/richer behavior.
 
     ////////////////////////
     // constants
-    var altitude = 3;
+    var altitude = 7;
     var verticalSpeed = 15 / 1000;      // units per milli-second
     var flyingSpeed = 15/1000;          // units per milli-second
     var turningSpeed = 15/1000;         // radians per milli-second
@@ -307,15 +307,4 @@ an example of a more complex/richer behavior.
 
 // make the objects and put them into the world
 // note that the helipads float above the floor to avoid z-fighting
-//grobjects.push(new Copter());
-grobjects.push(new Helipad([3,.01,3]));
-grobjects.push(new Helipad([3,.01,-3]));
-grobjects.push(new Helipad([-3,.01,-3]));
-grobjects.push(new Helipad([-3,.01,3]));
-
-// just to show - if there's a cube, we can land on it
-var acube = findObj("house1");
-if (acube) {
-    acube.helipad = true;
-    acube.helipadAltitude = .5;
-}
+grobjects.push(new Copter());
