@@ -134,7 +134,8 @@ window.onload = function() {
         lastTime = curTime;
 
         // first, let's clear the screen
-        gl.clearColor(0.0, 0.0, 0.0, 1.0);
+        // Sky blue
+        gl.clearColor(0.53, 0.80, 0.92, 1.0);
         gl.enable(gl.DEPTH_TEST);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 

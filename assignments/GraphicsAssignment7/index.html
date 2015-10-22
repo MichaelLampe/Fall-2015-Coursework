@@ -129,14 +129,10 @@
     precision highp float;
     varying vec3 outPos;
     void main(void) {
-        float xs = step(1.0,mod(outPos.x,2.0));
-        float zs = step(1.0,mod(outPos.z,2.0));
-        float ss = (xs>.5) ? zs : 1.0-zs;
-        gl_FragColor = mix(vec4(0.5,0.5,0.5,1),
-                           vec4(0.3,0.5,0.4,1),
-                           ss
-                           );
-
+        float xs = step(1.0,mod(outPos.x+2.0,6.0));
+        float zs = step(1.0,mod(outPos.z+2.0,6.0));
+        float ss = (xs<.3 || xs > 0.7) ? zs : 1.0-zs;
+        gl_FragColor = vec4(0.1,0.1,0.1,1);
     }
 </script>
 

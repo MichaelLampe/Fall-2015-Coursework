@@ -123,20 +123,28 @@ var shaderProgram = undefined;
         // Door
             // Brown door
         function door(width, height, depth, side,color){
-            console.log(side);
+            
+            // There is somethign wrong with these states as the doors do not always show up.
             switch(side){
                 case 1: 
-                    rectangle3D(0.5, 0.5, 0, height/2, depth/4, 3*depth/4,color);  
+                    rectangle3D(-0.01, -0.01, 0, height/2, depth/4, 3*depth/4,color);  
+                    break;
                 case 2:
                     rectangle3D(width+0.01, width+0.01, 0, height/2, depth/4, 3*depth/4,color);  
+                    break;
                 case 3:
-                    rectangle3D(width/4, 3*width/4, 0, height/2, 0.01, 0.01,color);
+                    rectangle3D(width/4, 3*width/4, 0, height/2, -0.01, -0.01,color);
+                    break;
                 case 4:
-                    rectangle3D(width/4, 3*width/4, 0, height/2, 0.01, 0.01,color);
+                    rectangle3D(width/4, 3*width/4, 0, height/2, depth+0.01, depth+0.01,color);
+                    break;
+                default:
+                    // Just in case
+                    rectangle3D(width/4, 3*width/4, 0, height/2, depth+0.01, depth+0.01,color);   
+                    console.log("Used default door location?");
+                    break;
             } 
         }
-            
-            
             
         function rectangle3D(lowerX, upperX, lowerY, upperY, lowerZ, upperZ,color){         
             color = color || [0,0,0];
@@ -163,12 +171,12 @@ var shaderProgram = undefined;
                         0,1,0, 0,1,0, 0,1,0,        0,1,0, 0,1,0, 0,1,0,
                         -1,0,0, -1,0,0, -1,0,0,     -1,0,0, -1,0,0, -1,0,0,
                         1,0,0, 1,0,0, 1,0,0,        1,0,0, 1,0,0, 1,0,0
-           );  
+           );
            for (var i = 0; i < 36; i++){
                house.inColor.data.push(color[0],color[1],color[2]);
            }
         }
-        door(width, height, depth, 3,doorColor);
+        door(width, height, depth, doorLocation, doorColor);
         roof(width, height, depth, roofColor);
         body(width, height, depth, bodyColor);
         return house;
@@ -181,29 +189,44 @@ var shaderProgram = undefined;
 
 // J should be a multiple of 4.
 // But I'm nice so I'll just make it work out.
-var numberOfHouses = 16;
+var numberOfHouses = 64;
 var houseSize = 1;
 // Each house gets a house size square
 // Base house size square 3x3
 var houseGrid = houseSize * 6;
 
-for (var x = 1; x <= numberOfHouses/4; x++){
-    for (var y = 1; y <= numberOfHouses/4; y++){
+for (var x = 1; x <= numberOfHouses/8; x++){
+    for (var y = 1; y <= numberOfHouses/8; y++){
         var houseName = "house" + x*y;
-        var doorLocation = Math.floor(Math.random()*4)
+        var doorLocation = Math.floor(Math.random()*4) + 1;
         var roofColor = [0.58,0.29,0.0];
         var bodyColor = [Math.random(),Math.random(),Math.random()];
         var doorColor = [0.0,0.0,0.0];
         var houseColors = [roofColor, bodyColor, doorColor];
-        var width = Math.floor(Math.random()*4 + 1);
-        var height = Math.floor(Math.random()*4 + 1);
-        var depth = Math.floor(Math.random()*4 + 1);
+        var width = Math.floor(Math.random()*3 + 1);
+        var height = Math.floor(Math.random()*3 + 1);
+        var depth = Math.floor(Math.random()*3 + 1);
         var houseDimensions = [width,height,depth];
         var newHouse = new House(houseName, [-houseGrid*x,0.5,-houseGrid*y], houseSize, houseColors, houseDimensions, doorLocation);
         grobjects.push(newHouse);
         heloLandingSites.push(newHouse);
-        
     }   
 }
 
-
+for (var x = 1; x <= numberOfHouses/8; x++){
+    for (var y = 1; y <= numberOfHouses/8; y++){
+        var houseName = "house" + x*y;
+        var doorLocation = Math.floor(Math.random()*4) + 1;
+        var roofColor = [0.58,0.29,0.0];
+        var bodyColor = [Math.random(),Math.random(),Math.random()];
+        var doorColor = [0.0,0.0,0.0];
+        var houseColors = [roofColor, bodyColor, doorColor];
+        var width = Math.floor(Math.random()*3 + 1);
+        var height = Math.floor(Math.random()*3 + 1);
+        var depth = Math.floor(Math.random()*3 + 1);
+        var houseDimensions = [width,height,depth];
+        var newHouse = new House(houseName, [houseGrid*x,0.5,-houseGrid*y], houseSize, houseColors, houseDimensions, doorLocation);
+        grobjects.push(newHouse);
+        heloLandingSites.push(newHouse);
+    }   
+}
