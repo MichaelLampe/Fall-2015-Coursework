@@ -47,6 +47,9 @@ an example of a more complex/richer behavior.
         this.color = [.9,.3,.4];
         // about the Y axis - it's the facing direction
         this.orientation = 0;
+        this.angle = 0;
+        this.direction = 1;
+        this.wings = twgl.m4.create;
     }
     Copter.prototype.init = function(drawingState) {
         var gl=drawingState.gl;
@@ -54,29 +57,74 @@ an example of a more complex/richer behavior.
 
         // create the shaders once - for all cubes
         if (!shaderProgram) {
-            shaderProgram = twgl.createProgramInfo(gl, ["cube-vs", "cube-fs"]);
+            shaderProgram = twgl.createProgramInfo(gl, ["butterfly-vs", "butterfly-fs"]);
         }
+       
         if (!copterBodyBuffers) {
+            
+            // Body
             var arrays = {
                 vpos : { numComponents: 3, data: [
-                    .5, 0, 0,  0,0,.5,  -.5,0,0,  0,0, -.5, 0,.5,0,    0, -.5,0,
-                    q,0,-q,  0,q,-q,  -q,0,-q,  0,-q,-q,  0,0,-1
+                    // Bottom 
+                    0.0, 0.0, 0.0,      0.5, 0.0, 0.0,      0.0,0.0,0.5,
+                    0.5, 0.0, 0.5,      0.5, 0.0, 0.0,      0.0,0.0,0.5,
+                    // Top
+                    0.0, 0.5, 0.0,      0.5, 0.5, 0.0,      0.0,0.5,0.5,
+                    0.5, 0.5, 0.5,      0.5, 0.5, 0.0,      0.0,0.5,0.5,
+                    // Left
+                    0.0, 0.0, 0.0,      0.0, 0.5, 0.0,      0.0,0.0,0.5,
+                    0.0, 0.5, 0.5,      0.0, 0.5, 0.0,      0.0,0.0,0.5,
+                    // Right
+                    0.5, 0.0, 0.0,      0.5, 0.5, 0.0,      0.5,0.0,0.5,
+                    0.5, 0.5, 0.5,      0.5, 0.5, 0.0,      0.5,0.0,0.5,
+                    // Front pyramid
+                    0.25, 0.25, 0.75,   0.5, 0.5, 0.5,      0.5, 0.0, 0.5, 
+                    0.25, 0.25, 0.75,   0.5, 0.5, 0.5,      0.0, 0.5, 0.5, 
+                    0.25, 0.25, 0.75,   0.0, 0.0, 0.5,      0.5, 0.0, 0.5, 
+                    0.25, 0.25, 0.75,   0.0, 0.0, 0.5,      0.0, 0.5, 0.5, 
+                    // Back pyramid
+                    0.25, 0.25, -0.25,   0.5, 0.5, 0.0,      0.5, 0.0, 0.0, 
+                    0.25, 0.25, -0.25,   0.5, 0.5, 0.0,      0.0, 0.5, 0.0, 
+                    0.25, 0.25, -0.25,   0.0, 0.0, 0.0,      0.5, 0.0, 0.0, 
+                    0.25, 0.25, -0.25,   0.0, 0.0, 0.0,      0.0, 0.5, 0.0 
                 ] },
                 vnormal : {numComponents:3, data: [
-                    1,0,0,  0,0,1,  -1,0,0,  0,0,-1, 0,1,0,  0,-1,0,
-                    1,0,0,  0,1,0,  -1,0,0,  0,-1,0,  0,0,-1
+                    // Bottom 
+                    0.0, 0.0, 0.0,      0.0, 0.0, 0.0,     0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0,      0.0, 0.0, 0.0,     0.0, 0.0, 0.0,
+                    // Top
+                    0.0, 0.0, 0.0,      0.0, 0.0, 0.0,     0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0,      0.0, 0.0, 0.0,     0.0, 0.0, 0.0,
+                    // Left
+                    0.0, 0.0, 0.0,      0.0, 0.0, 0.0,     0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0,      0.0, 0.0, 0.0,     0.0, 0.0, 0.0,
+                    // Right
+                    0.0, 0.0, 0.0,      0.0, 0.0, 0.0,     0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0,      0.0, 0.0, 0.0,     0.0, 0.0, 0.0,
+                    // Front pyramid
+                    0.0, 0.0, 0.0,      0.0, 0.0, 0.0,     0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0,      0.0, 0.0, 0.0,     0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0,      0.0, 0.0, 0.0,     0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0,      0.0, 0.0, 0.0,     0.0, 0.0, 0.0,
+                    // Back pyramid
+                    0.0, 0.0, 0.0,      0.0, 0.0, 0.0,     0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0,      0.0, 0.0, 0.0,     0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0,      0.0, 0.0, 0.0,     0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0,      0.0, 0.0, 0.0,     0.0, 0.0, 0.0
                 ]},
-                indices : [0,1,4, 1,2,4, 2,3,4, 3,0,4, 1,0,5, 2,1,5, 3,2,5, 0,3,5,
-                           6,7,10, 7,8,10, 8,9,10, 9,6,10
-                            ]
+
             };
             copterBodyBuffers = twgl.createBufferInfoFromArrays(drawingState.gl,arrays);
-
+            
+            // Wings
             var rarrays = {
-                vpos : {numcomponents:3, data: [0,.5,0, 1,.5,.1, 1,.5, -.1,
-                                                0,.5,0, -1,.5,.1, -1,.5, -.1]},
-                vnormal : {numcomponents:3, data: [0,1,0, 0,1,0, 0,1,0, 0,1,0, 0,1,0, 0,1,0]},
-                indices : [0,1,2, 3,4,5]
+                vpos : {numComponents:3, data: [
+                    0.0, 0.3, 0.25,     -1.0, 0.3, -0.5,      -1.0, 0.3, 1.0,
+                    0.5, 0.3, 0.25,     1.5, 0.3, -0.5,        1.5, 0.3, 1.0
+                ]},
+                vnormal : {numComponents:3, data: [
+                    0,1,0, 0,1,0, 0,1,0, 0,1,0, 0,1,0, 0,1,0
+                ]}
             };
             copterRotorBuffers = twgl.createBufferInfoFromArrays(drawingState.gl,rarrays);
         }
@@ -96,79 +144,34 @@ an example of a more complex/richer behavior.
 
         // we make a model matrix to place the cube in the world
         var modelM = twgl.m4.rotationY(this.orientation);
+        twgl.m4.scale(modelM,[0.25,0.25,0.25],modelM);
         twgl.m4.setTranslation(modelM,this.position,modelM);
+        var leftwings = twgl.m4.rotationZ(this.angle*Math.PI/180);
+        var rightwings = twgl.m4.rotationZ(-this.angle*Math.PI/180);
         // the drawing coce is straightforward - since twgl deals with the GL stuff for us
         var gl = drawingState.gl;
         gl.useProgram(shaderProgram.program);
+        
+        if (this.angle > 30){
+            this.direction = -1;
+        }
+        if (this.angle < -30){
+            this.direction = 1;
+        }
         twgl.setUniforms(shaderProgram,{
             view:drawingState.view, proj:drawingState.proj, lightdir:drawingState.sunDirection,
-            cubecolor:this.color, model: modelM });
+            cubecolor:this.color, model: modelM, leftmovewings: leftwings, rightmovewings: rightwings});
         twgl.setBuffersAndAttributes(gl,shaderProgram,copterBodyBuffers);
         twgl.drawBufferInfo(gl, gl.TRIANGLES, copterBodyBuffers);
         twgl.setBuffersAndAttributes(gl,shaderProgram,copterRotorBuffers);
         twgl.drawBufferInfo(gl, gl.TRIANGLES, copterRotorBuffers);
+        this.angle = this.angle + 1*this.direction;
+        
     };
     Copter.prototype.center = function(drawingState) {
         return this.position;
     }
 
-
-    // constructor for Helipad
-    // note that anything that has a helipad and helipadAltitude key can be used
-    Helipad = function Helipad(position) {
-        this.name = "helipad"+padNumber++;
-        this.position = position || [2,0.01,2];
-        this.size = 1.0;
-        // yes, there is probably a better way
-        this.helipad = true;
-        // what altitude should the helicopter be?
-        // this get added to the helicopter size
-        this.helipadAltitude = 0;
-    }
-    Helipad.prototype.init = function(drawingState) {
-        var gl=drawingState.gl;
-        var q = .25;  // abbreviation
-
-        // create the shaders once - for all cubes
-        if (!shaderProgram) {
-            shaderProgram = twgl.createProgramInfo(gl, ["cube-vs", "cube-fs"]);
-        }
-        if (!padBuffers) {
-            var arrays = {
-                vpos : { numComponents: 3, data: [
-                    -1,0,-1, -1,0,1, -.5,0,1, -.5,0,-1,
-                    1,0,-1, 1,0,1, .5,0,1, .5,0,-1,
-                    -.5,0,-.25, -.5,0,.25,.5,0,.25,.5,0, -.25
-
-                ] },
-                vnormal : {numComponents:3, data: [
-                    0,1,0, 0,1,0, 0,1,0, 0,1,0,
-                    0,1,0, 0,1,0, 0,1,0, 0,1,0,
-                    0,1,0, 0,1,0, 0,1,0, 0,1,0
-                ]},
-                indices : [0,1,2, 0,2,3, 4,5,6, 4,6,7, 8,9,10, 8,10,11
-                            ]
-            };
-            padBuffers = twgl.createBufferInfoFromArrays(drawingState.gl,arrays);
-        }
-
-    };
-    Helipad.prototype.draw = function(drawingState) {
-        // we make a model matrix to place the cube in the world
-        var modelM = twgl.m4.scaling([this.size,this.size,this.size]);
-        twgl.m4.setTranslation(modelM,this.position,modelM);
-        // the drawing coce is straightforward - since twgl deals with the GL stuff for us
-        var gl = drawingState.gl;
-        gl.useProgram(shaderProgram.program);
-        twgl.setUniforms(shaderProgram,{
-            view:drawingState.view, proj:drawingState.proj, lightdir:drawingState.sunDirection,
-            cubecolor:[1,1,0], model: modelM });
-        twgl.setBuffersAndAttributes(gl,shaderProgram,padBuffers);
-        twgl.drawBufferInfo(gl, gl.TRIANGLES, padBuffers);
-    };
-    Helipad.prototype.center = function(drawingState) {
-        return this.position;
-    }
 
     ///////////////////////////////////////////////////////////////////
     // Helicopter Behavior
@@ -199,9 +202,8 @@ an example of a more complex/richer behavior.
     // constants
     var altitude = 7;
     var verticalSpeed = 15 / 1000;      // units per milli-second
-    var flyingSpeed = 15/1000;          // units per milli-second
-    var turningSpeed = 15/1000;         // radians per milli-second
-
+    var flyingSpeed = 3/1000;          // units per milli-second
+    var turningSpeed = 40/1000;         // radians per milli-second
     // utility - generate random  integer
     function getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min)) + min;
@@ -225,7 +227,7 @@ an example of a more complex/richer behavior.
         }
         var delta = drawingState.realtime - heli.lastTime;
         heli.lastTime = drawingState.realtime;
-
+        var floatLikeAButterfly = 0;
         // now do the right thing depending on state
         switch (heli.state) {
             case 0: // on the ground, waiting for take off
@@ -280,6 +282,9 @@ an example of a more complex/richer behavior.
                     go = Math.min(heli.dst,go);
                     heli.position[0] += heli.vx * go;
                     heli.position[2] += heli.vz * go;
+                    // Fix this equation
+                    heli.position[1] = Math.abs(Math.sin(floatLikeAButterfly*Math.PI/180)*altitude*0.25) + altitude;
+                    floatLikeAButterfly += 4;
                     heli.dst -= go;
                 } else { // we're effectively there, so go there
                     heli.position[0] = heli.lastPad.position[0];
@@ -288,6 +293,7 @@ an example of a more complex/richer behavior.
                 }
                 break;
             case 4: // land at goal
+                floatLikeAButterfly = 0;
                 var destAlt = heli.lastPad.position[1] + .5 + heli.lastPad.helipadAltitude;
                 if (heli.position[1] > destAlt) {
                     var down = delta * verticalSpeed;
@@ -307,4 +313,7 @@ an example of a more complex/richer behavior.
 
 // make the objects and put them into the world
 // note that the helipads float above the floor to avoid z-fighting
-grobjects.push(new Copter());
+var numberOfButterflies = 50;
+for (var i = 0; i < numberOfButterflies; i++){
+    grobjects.push(new Copter());
+}

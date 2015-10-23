@@ -90,13 +90,14 @@ window.onload = function() {
         gl : gl,
         proj : twgl.m4.identity(),
         view : twgl.m4.identity(),
+        camera : twgl.m4.identity(),
         sunDirection : [0,1,0]
     }
     
 
     // information for the cameras
-    var lookAt = [0,0,0];
-    var lookFrom = [0,5,-10];
+    var lookAt = [0,1,0];
+    var lookFrom = [0,1,-10];
     var fov = 1.1;
 
     var arcball = new ArcBall(canvas);
@@ -210,6 +211,7 @@ window.onload = function() {
             gl : gl,
             proj : projM,   // twgl.m4.identity(),
             view : viewM,   // twgl.m4.identity(),
+            camera : cameraM,
             timeOfDay : tod,
             sunDirection : sunDirection,
             realtime : realtime

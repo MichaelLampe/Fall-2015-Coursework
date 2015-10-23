@@ -1,41 +1,12 @@
-/**
- * Created by gleicher on 10/9/15.
- */
-/*
- a second example object for graphics town
- check out "simplest" first
-
- the cube is more complicated since it is designed to allow making many cubes
-
- we make a constructor function that will make instances of cubes - each one gets
- added to the grobjects list
-
- we need to be a little bit careful to distinguish between different kinds of initialization
- 1) there are the things that can be initialized when the function is first defined
-    (load time)
- 2) there are things that are defined to be shared by all cubes - these need to be defined
-    by the first init (assuming that we require opengl to be ready)
- 3) there are things that are to be defined for each cube instance
- */
 var grobjects = grobjects || [];
 var heloLandingSites = heloLandingSites || [];
 // allow the two constructors to be "leaked" out
 var House = undefined;
 
-// this is a function that runs at loading time (note the parenthesis at the end)
-
-// i will use this function's scope for things that will be shared
-// across all cubes - they can all have the same buffers and shaders
-// note - twgl keeps track of the locations for uniforms and attributes for us!
 var shaderProgram = undefined;
 (function() {
     "use strict";
-
-    // i will use this function's scope for things that will be shared
-    // across all cubes - they can all have the same buffers and shaders
-    // note - twgl keeps track of the locations for uniforms and attributes for us!
     var shaderProgram = undefined;
-    // constructor for Cubes
     House = function House(name, position, size, houseColors, houseDimensions, doorLocation) {
         "use strict";
         this.name = name;
@@ -58,7 +29,6 @@ var shaderProgram = undefined;
     };
     House.prototype.init = function(drawingState) {
         var gl=drawingState.gl;
-        // create the shaders once - for all cubes
         if (!shaderProgram) {
             shaderProgram = twgl.createProgramInfo(gl, ["house-vs", "house-fs"]);
         }
@@ -72,11 +42,13 @@ var shaderProgram = undefined;
         twgl.m4.setTranslation(modelM,this.position,modelM);
         // the drawing code is straightforward - since twgl deals with the GL stuff for us
         var gl = drawingState.gl;
+        
+        
         gl.useProgram(shaderProgram.program);
         twgl.setBuffersAndAttributes(gl,shaderProgram,this.buffers);
         twgl.setUniforms(shaderProgram,{
             view:drawingState.view, proj:drawingState.proj, lightdir:drawingState.sunDirection,
-            model: modelM });
+            model: modelM});
         twgl.drawBufferInfo(gl, gl.TRIANGLES, this.buffers);
         
     };
