@@ -1,12 +1,18 @@
-function slowMove(input){
-    var selectedItem = $(input);
-    selectedItem.on('click', function(e){
-    e.preventDefault();
-    var target= selectedItem.attr('href');
-    $('html, body').stop().animate({
-       scrollTop: $(target).offset().top
-    }, 1000);
-});
-}
+jQuery.fn.slowMove = function(){
+    var target= this.attr('href');
+    this.on('click', function(e){
+        e.preventDefault();
+        $('html, body').stop().animate({
+           scrollTop: $(target).offset().top
+        }, 1000);
+    });
+};
 
-slowMove('#learn-more');
+jQuery.fn.verticalAlign = function (){
+    return this
+            .css("margin-top",($(this).parent().height() - $(this).height())/2 + 'px' )
+};
+
+$('#learn-more').slowMove();
+
+$('.bubble-text').verticalAlign();

@@ -2,7 +2,11 @@
 	General doc setup
 */
 html {
-	background: #EEE;
+	background: #343642;
+	/*
+	This is the default color for all text on the page.
+	*/
+	color: #ffbb03;
 }
 
 /* 
@@ -11,6 +15,22 @@ html {
 .moving-link-element {
 	color: inherit;
 	text-decoration: none;
+}
+.bubble {
+	border-radius: 50%;
+	width: 20vw;
+	height: 20vw;
+}
+
+.bubble-text {
+	text-align: center;
+	font-size: 2em;
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 
@@ -107,14 +127,20 @@ The body
 */
 
 .pure-g {
+	padding: 5%;
 	letter-spacing: inherit;
 	position:absolute;
 	top: 100%;
-	width: 100%;
+	width: 90%;
 	min-height: 100%;
 	z-index: 7;
-	background:#F2EBC7;
+	/*
+		The line paper was modified (Well, I filtered it) from Gjermund Gustavsen's "Lined paper" on subtlepatterns.com
+	*/
+	background: url("../images/paper.png");
+	-webkit-filter: brightness(0.65) contrast(3) sepia(0.2) ;
 }
+
 .transition-content {
 	background: #343642;
 	height: 5vh;
@@ -126,12 +152,8 @@ The body
 	border-right: 50vh solid transparent;
 }
 
-#top-header-left {
-	margin-top: 5vh;
-	height: 10vh;
-	background:#048899
-}
-#top-header-right {
-	margin-top: 5vh;
-	background: #348899
+#bubble-one {
+	position: absolute;
+	left: 40%;
+	background: #ffbb03;
 }
