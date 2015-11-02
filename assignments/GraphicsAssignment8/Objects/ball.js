@@ -12,7 +12,9 @@ var heloLandingSites = heloLandingSites || [];
         this.size = size || 1.0;
         this.textureLocation = textureLocation;
         this.helipad = true;
-                this.helipadAltitude = 50;
+        this.helipadAltitude = 50;
+        this.rotate = 0;        
+        this.innerRotate = 0;
         /*
             Declare buffer here... 
             If you declare it out of scope, the first buffer 
@@ -38,7 +40,9 @@ var heloLandingSites = heloLandingSites || [];
         // we make a model matrix to place the cube in the world
         var modelM = twgl.m4.scaling([this.size,this.size,this.size]);
         twgl.m4.setTranslation(modelM,this.position,modelM);
-        twgl.m4.setTranslation(modelM,this.position,modelM)
+        twgl.m4.rotateY(modelM,this.rotate*Math.PI/180,modelM);
+        twgl.m4.translate(modelM,[0,0,-30],modelM);
+        //twgl.m4.rotateY(modelM,Math.PI*this.innerRotation/180,modelM);
         // the drawing code is straightforward - since twgl deals with the GL stuff for us
         var gl = drawingState.gl;
         
@@ -54,7 +58,8 @@ var heloLandingSites = heloLandingSites || [];
             model: modelM,
             uTexture: this.texture.myimage});
         twgl.drawBufferInfo(gl, gl.TRIANGLES, this.buffers);
-        
+        this.rotate += .5;
+        this.innerRotate += 0.2;
     };
     
     Ball.prototype.drawBall = function(drawingState, radius,resolution, yStart){
@@ -73,6 +78,6 @@ var heloLandingSites = heloLandingSites || [];
     // now that we've defined the object, add it to the global objects list
 })();
 var moonTextureLocation = "images/moon.jpg"
-var moon = new Ball("Moon",[0,20,-30],2,moonTextureLocation)
+var moon = new Ball("Moon",[0,40,-30],2,moonTextureLocation)
 grobjects.push(moon);
 heloLandingSites.push(moon);

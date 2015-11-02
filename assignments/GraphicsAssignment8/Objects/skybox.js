@@ -57,7 +57,7 @@ var Skybox = undefined;
     };
     
     Skybox.prototype.drawSkybox = function(drawingState, radius,resolution, yStart){
-        var ball = twgl.primitives.createSphereBufferInfo(drawingState.gl,radius,resolution,resolution)
+        var ball = twgl.primitives.createSphereBufferInfo(drawingState.gl,radius,resolution,resolution,Math.PI/2);
         return ball;
     }
         
@@ -70,6 +70,6 @@ var Skybox = undefined;
     
     // now that we've defined the object, add it to the global objects list
 })();
-var earthTextureLocation = "images/night-sky.jpg";
-var moon = new Skybox("Skybox",[0,0,0],25,earthTextureLocation);
+var earthTextureLocation = "images/stars.jpg";
+var moon = new Skybox("Skybox",[0,0,0],15,earthTextureLocation);
 grobjects.push(moon);

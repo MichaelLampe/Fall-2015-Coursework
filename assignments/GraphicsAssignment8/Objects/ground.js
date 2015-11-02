@@ -20,7 +20,7 @@ var grobjects = grobjects || [];
 // a global variable to set the ground plane size, so we can easily adjust it
 // in the html file (before things run
 // this is the +/- in the X and Z direction (so things will go from -5 to +5 by default)
-var groundPlaneSize = groundPlaneSize || 100;
+var groundPlaneSize = groundPlaneSize || 300;
 
 // now, I make a function that adds an object to that list
 // there's a funky thing here where I have to not only define the function, but also
