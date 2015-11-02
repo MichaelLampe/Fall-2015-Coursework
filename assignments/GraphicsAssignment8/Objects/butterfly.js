@@ -144,7 +144,7 @@ an example of a more complex/richer behavior.
 
         // we make a model matrix to place the cube in the world
         var modelM = twgl.m4.rotationY(this.orientation);
-        twgl.m4.scale(modelM,[0.25,0.25,0.25],modelM);
+        twgl.m4.scale(modelM,[0.125,0.125,0.125],modelM);
         twgl.m4.setTranslation(modelM,this.position,modelM);
         var leftwings = twgl.m4.rotationZ(this.angle*Math.PI/180);
         var rightwings = twgl.m4.rotationZ(-this.angle*Math.PI/180);

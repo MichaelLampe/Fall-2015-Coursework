@@ -1,11 +1,10 @@
 var grobjects = grobjects || [];
-var Ball = undefined;
-var heloLandingSites = heloLandingSites || [];
+var Skybox = undefined;
 
 (function() {
     "use strict";
     var shaderProgram = undefined;
-    Ball = function Ball(name, position, size, textureLocation) {
+    Skybox = function Skybox(name, position, size, textureLocation) {
         "use strict";
         this.name = name;
         this.position = position || [0,0,0];
@@ -22,23 +21,23 @@ var heloLandingSites = heloLandingSites || [];
         this.buffers = undefined;
     };
     
-    Ball.prototype.init = function(drawingState) {
+    Skybox.prototype.init = function(drawingState) {
         var gl=drawingState.gl;
         if (!shaderProgram) {
             shaderProgram = twgl.createProgramInfo(gl, ["ball-vs", "ball-fs"]);
         }
         if (!this.buffers) {
-            this.buffers = this.drawBall(drawingState,this.size,40);
+            this.buffers = this.drawSkybox(drawingState,this.size,40);
         }
         this.texture = twgl.createTextures(drawingState.gl, {
-            myimage: {src: this.textureLocation, mag: gl.NEAREST}
+            myimage: {src: this.textureLocation, mag: gl.NEAREST, min: gl.LINEAR}
         });
+        console.log(drawingState.gl);
     };
-    Ball.prototype.draw = function(drawingState) {
+    Skybox.prototype.draw = function(drawingState) {
         // we make a model matrix to place the cube in the world
         var modelM = twgl.m4.scaling([this.size,this.size,this.size]);
         twgl.m4.setTranslation(modelM,this.position,modelM);
-        twgl.m4.setTranslation(modelM,this.position,modelM)
         // the drawing code is straightforward - since twgl deals with the GL stuff for us
         var gl = drawingState.gl;
         
@@ -57,13 +56,12 @@ var heloLandingSites = heloLandingSites || [];
         
     };
     
-    Ball.prototype.drawBall = function(drawingState, radius,resolution, yStart){
+    Skybox.prototype.drawSkybox = function(drawingState, radius,resolution, yStart){
         var ball = twgl.primitives.createSphereBufferInfo(drawingState.gl,radius,resolution,resolution)
         return ball;
-        
     }
         
-    Ball.prototype.center = function(drawingState) {
+    Skybox.prototype.center = function(drawingState) {
         return this.position;
     };
     
@@ -72,7 +70,6 @@ var heloLandingSites = heloLandingSites || [];
     
     // now that we've defined the object, add it to the global objects list
 })();
-var moonTextureLocation = "images/moon.jpg"
-var moon = new Ball("Moon",[0,20,-30],2,moonTextureLocation)
+var earthTextureLocation = "images/night-sky.jpg";
+var moon = new Skybox("Skybox",[0,0,0],25,earthTextureLocation);
 grobjects.push(moon);
-heloLandingSites.push(moon);

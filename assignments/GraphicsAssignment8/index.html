@@ -14,16 +14,18 @@
 <script src="Libraries/arcball.js"></script>
 <script src="grobject.js"></script>
 <script src="Objects/ground.js"></script>
+<script src="Objects/road.js"></script>
 
 <!-- This is where we load the objects for the world -->
 <script src="Objects/texturedplane.js"></script>
 <script src="Objects/house.js"></script>
+<!-- Skybox -->
+<script src="Objects/skybox.js"></script>
+<!-- Nice shiny ball -->
+<script src="Objects/ball.js"></script>
 
 <!-- I am adding the butterflies -->
 <script src="Objects/butterfly.js"></script>
-
-<!-- Nice shiny ball -->
-<script src="Objects/ball.js"></script>
 
 <!-- This gets loaded LAST (actually, it probably doesn't have to) -->
 <script src="graphicstown.js"></script>
@@ -92,21 +94,37 @@
 
     attribute vec3 position;
     attribute vec3 normal;
+    attribute vec2 texcoord;
+    
+    varying vec2 vTexCoord;
+    
     varying vec4 fNormal;
     varying vec3 pos;
     varying float diffuse;
+    
+    varying vec3 eyeNormal;
+    varying vec3 eyePosition;
     
     //uniform vec3 camera;
     uniform mat4 view;
     uniform mat4 proj;
     uniform mat4 model;
+    uniform mat4 camera;
     uniform vec3 lightdir;
+    
+    
 
     void main(void) {
         pos = position;
+
+        vTexCoord = texcoord;
+
+
+
         fNormal = normalize(model * vec4(normal,0.0));
-        diffuse = 0.5 + 0.5*(dot(normal, lightdir));
+        diffuse = max(0.0, (dot(normal, lightdir)));
         gl_Position = proj * view * model * vec4(position, 1.0);
+        
     }
 </script>
 <script id="ball-fs" type="notjs">
@@ -117,11 +135,21 @@
     varying vec4 normal;
     varying vec3 pos;
     varying float diffuse;
+    varying vec2 vTexCoord;
+    
+    varying vec3 eyeNormal;
+    
+    uniform sampler2D uTexture;
+
     
     void main(void) {
+        
+        vec3 diffuseColor = vec3(0.5,0.5,0.5);
+    
+   
         vec3 basicColor = vec3(0.5,0.5,0.5);
-        vec3 color = basicColor*diffuse;
-        gl_FragColor = vec4(color, 1.0);
+        vec3 color = 0.0*basicColor + diffuseColor*diffuse;
+        gl_FragColor = texture2D(uTexture, vTexCoord);
     }
 </script>
 
@@ -179,12 +207,16 @@
     precision highp float;
 
     attribute vec3 vpos;
+    attribute vec2 texcoord;
+    
     varying vec3 outPos;
+    varying vec2 vTexCoord;
 
     uniform mat4 view;
     uniform mat4 proj;
 
     void main(void) {
+        vTexCoord = texcoord;
         gl_Position = proj * view * vec4(vpos, 1.0);
         outPos = vpos;
     }
@@ -193,12 +225,40 @@
     // note this is used for more than just the cube
     precision highp float;
     varying vec3 outPos;
+    varying vec2 vTexCoord; 
+    
+    uniform sampler2D uOtherTexture;
     void main(void) {
-        if (outPos.x < 4.0 && outPos.x > -2.0){
-            gl_FragColor = vec4(0.9,0.9,0.9,1);
-        } else{
-            gl_FragColor = vec4(0.1,0.1,0.1,1);
-        }
+            gl_FragColor = texture2D(uOtherTexture, vTexCoord);
+    }
+</script>
+<script id="road-vs" type="not-js">
+    precision highp float;
+
+    attribute vec3 vpos;
+    attribute vec2 texcoord;
+    
+    varying vec3 outPos;
+    varying vec2 vTexCoord;
+
+    uniform mat4 view;
+    uniform mat4 proj;
+
+    void main(void) {
+        vTexCoord = texcoord;
+        gl_Position = proj * view * vec4(vpos, 1.0);
+        outPos = vpos;
+    }
+</script>
+<script id="road-fs" type="notjs">
+    // note this is used for more than just the cube
+    precision highp float;
+    varying vec3 outPos;
+    varying vec2 vTexCoord; 
+    
+    uniform sampler2D uRoadTexture;
+    void main(void) {
+         gl_FragColor = texture2D(uRoadTexture, vTexCoord);
     }
 </script>
 

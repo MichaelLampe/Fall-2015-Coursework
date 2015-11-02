@@ -40,6 +40,7 @@ var shaderProgram = undefined;
         // we make a model matrix to place the cube in the world
         var modelM = twgl.m4.scaling([this.size,this.size,this.size]);
         twgl.m4.setTranslation(modelM,this.position,modelM);
+        //twgl.m4.setTranslation(modelM,[0,-0.5,0],modelM);
         // the drawing code is straightforward - since twgl deals with the GL stuff for us
         var gl = drawingState.gl;
         
