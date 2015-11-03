@@ -58,7 +58,7 @@ var heloLandingSites = heloLandingSites || [];
             model: modelM,
             uTexture: this.texture.myimage});
         twgl.drawBufferInfo(gl, gl.TRIANGLES, this.buffers);
-        this.rotate += .2;
+        this.rotate += .5;
         this.innerRotate += 0.2;
     };
     

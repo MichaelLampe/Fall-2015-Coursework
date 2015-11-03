@@ -20,7 +20,8 @@ var grobjects = grobjects || [];
 // a global variable to set the ground plane size, so we can easily adjust it
 // in the html file (before things run
 // this is the +/- in the X and Z direction (so things will go from -5 to +5 by default)
-var groundPlaneSize = groundPlaneSize || 300;
+var groundPlaneSize = groundPlaneSize || 100;
+var roadWidth = roadWidth || 3;
 
 // now, I make a function that adds an object to that list
 // there's a funky thing here where I have to not only define the function, but also
@@ -30,21 +31,21 @@ var groundPlaneSize = groundPlaneSize || 300;
 
     // putting the arrays of object info here as well
     var vertexPos = [
-        -groundPlaneSize, -0.05, -groundPlaneSize,
-         groundPlaneSize, -0.05, -groundPlaneSize,
-         groundPlaneSize, -0.05,  groundPlaneSize,
+        -roadWidth+1, 0.00, -groundPlaneSize,
+         roadWidth, 0.00, -groundPlaneSize,
+         roadWidth, 0.00,  groundPlaneSize,
          
-        -groundPlaneSize, -0.05, -groundPlaneSize,
-         groundPlaneSize, -0.05,  groundPlaneSize,
-        -groundPlaneSize, -0.05,  groundPlaneSize
+        -roadWidth+1, 0.00, -groundPlaneSize,
+         roadWidth, 0.00,  groundPlaneSize,
+        -roadWidth+1, 0.00,  groundPlaneSize
     ];
     var texcoords = [
         0,0,
-        100,0,
-        100,100,
+        1,0,
+        1,20,
         0,0,
-        100,100,
-        0,100
+        1,20,
+        0,20
     ];
 
     // since there will be one of these, just keep info in the closure
@@ -62,7 +63,7 @@ var groundPlaneSize = groundPlaneSize || 300;
         // first I will give this the required object stuff for it's interface
         // note that the init and draw functions can refer to the fields I define
         // below
-        name : "Ground Plane",
+        name : "Main Road",
         // the two workhorse functions - init and draw
         // init will be called when there is a GL context
         // this code gets really bulky since I am doing it all in place
@@ -70,12 +71,12 @@ var groundPlaneSize = groundPlaneSize || 300;
             // an abbreviation...
             var gl = drawingState.gl;
             if (!shaderProgram) {
-                shaderProgram = twgl.createProgramInfo(gl,["ground-vs","ground-fs"]);
+                shaderProgram = twgl.createProgramInfo(gl,["road-vs","road-fs"]);
             }
             var arrays = { vpos : {numComponents:3, data:vertexPos }, texcoord: {numComponents:2, data:texcoords}};
             buffers = twgl.createBufferInfoFromArrays(gl,arrays);
             this.texture = twgl.createTextures(drawingState.gl, {
-                otherparts: {src: "images/stone.jpg", wrap: gl.REPEAT}
+                roadway: {src: "images/road.png", wrapT:gl.REPEAT}
             });
        },
         draw : function(drawingState) {
@@ -83,7 +84,7 @@ var groundPlaneSize = groundPlaneSize || 300;
             gl.useProgram(shaderProgram.program);
             twgl.setBuffersAndAttributes(gl,shaderProgram,buffers);
             twgl.setUniforms(shaderProgram,{
-                view:drawingState.view, lightdir:drawingState.sunDirection, proj:drawingState.proj, uRoadTexture:this.texture.roadway,uOtherTexture:this.texture.otherparts
+                view:drawingState.view, proj:drawingState.proj, uRoadTexture:this.texture.roadway,uOtherTexture:this.texture.otherparts
             });
             twgl.drawBufferInfo(gl, gl.TRIANGLES, buffers);
         },

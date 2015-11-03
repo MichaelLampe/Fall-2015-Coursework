@@ -83,7 +83,7 @@ var groundPlaneSize = groundPlaneSize || 300;
             gl.useProgram(shaderProgram.program);
             twgl.setBuffersAndAttributes(gl,shaderProgram,buffers);
             twgl.setUniforms(shaderProgram,{
-                view:drawingState.view, lightdir:drawingState.sunDirection, proj:drawingState.proj, uRoadTexture:this.texture.roadway,uOtherTexture:this.texture.otherparts
+                view:drawingState.view, proj:drawingState.proj, uRoadTexture:this.texture.roadway,uOtherTexture:this.texture.otherparts
             });
             twgl.drawBufferInfo(gl, gl.TRIANGLES, buffers);
         },

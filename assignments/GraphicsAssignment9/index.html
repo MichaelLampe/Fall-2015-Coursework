@@ -207,22 +207,18 @@
     precision highp float;
 
     attribute vec3 vpos;
-    attribute vec3 normal;
     attribute vec2 texcoord;
     
     varying vec3 outPos;
     varying vec2 vTexCoord;
-    varying float vDiffuse;
 
     uniform mat4 view;
     uniform mat4 proj;
-    uniform vec3 lightdir;
 
     void main(void) {
         vTexCoord = texcoord;
         gl_Position = proj * view * vec4(vpos, 1.0);
         outPos = vpos;
-        vDiffuse = .5 + .5*abs(dot(normal, lightdir));
     }
 </script>
 <script id="ground-fs" type="notjs">
@@ -230,12 +226,10 @@
     precision highp float;
     varying vec3 outPos;
     varying vec2 vTexCoord; 
-    varying float vDiffuse;
     
     uniform sampler2D uOtherTexture;
     void main(void) {
-            vec4 color = texture2D(uOtherTexture, vTexCoord);
-            gl_FragColor = 0.5*color + 0.5*color*vDiffuse;
+            gl_FragColor = texture2D(uOtherTexture, vTexCoord);
     }
 </script>
 <script id="road-vs" type="not-js">
