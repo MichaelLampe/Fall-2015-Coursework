@@ -54,8 +54,9 @@ var heloLandingSites = heloLandingSites || [];
         twgl.setUniforms(shaderProgram,{
             view:drawingState.view,
             proj:drawingState.proj,
-             lightdir:drawingState.sunDirection,
+            lightdir:drawingState.sunDirection,
             model: modelM,
+            uCamera: drawingState.camera,
             uTexture: this.texture.myimage});
         twgl.drawBufferInfo(gl, gl.TRIANGLES, this.buffers);
         this.rotate += .2;

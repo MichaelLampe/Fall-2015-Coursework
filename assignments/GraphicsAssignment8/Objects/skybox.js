@@ -24,7 +24,7 @@ var Skybox = undefined;
     Skybox.prototype.init = function(drawingState) {
         var gl=drawingState.gl;
         if (!shaderProgram) {
-            shaderProgram = twgl.createProgramInfo(gl, ["ball-vs", "ball-fs"]);
+            shaderProgram = twgl.createProgramInfo(gl, ["skybox-vs", "skybox-fs"]);
         }
         if (!this.buffers) {
             this.buffers = this.drawSkybox(drawingState,this.size,40);

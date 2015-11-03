@@ -17,7 +17,6 @@
 <script src="Objects/road.js"></script>
 
 <!-- This is where we load the objects for the world -->
-<script src="Objects/texturedplane.js"></script>
 <script src="Objects/house.js"></script>
 <!-- Skybox -->
 <script src="Objects/skybox.js"></script>
@@ -82,7 +81,7 @@
     }
 </script>
 
-<script id="ball-vs" type="notjs">
+<script id="skybox-vs" type="notjs">
 // specialized shader for the simple cube
 // we assume that the model matrix works as the normal
 //      matrix - this only is try if the model matrix
@@ -91,7 +90,6 @@
 // color is solid
 // simple lighting
     precision highp float;
-
     attribute vec3 position;
     attribute vec3 normal;
     attribute vec2 texcoord;
@@ -113,12 +111,78 @@
     uniform vec3 lightdir;
     
     
+    void main(void) {
+        pos = position;
+        vTexCoord = texcoord;
+        fNormal = normalize(model * vec4(normal,0.0));
+        diffuse = max(0.0, (dot(normal, lightdir)));
+        gl_Position = proj * view * model * vec4(position, 1.0);
+        
+    }
+</script>
+<script id="skybox-fs" type="notjs">
+// simple shader that does vertex coloring
+//  (e.g. the vertex shader figures the lighting
+// note this is used for more than just the cube
+    precision highp float;
+    varying vec4 normal;
+    varying vec3 pos;
+    varying float diffuse;
+    varying vec2 vTexCoord;
+    
+    varying vec3 eyeNormal;
+    
+    uniform sampler2D uTexture;
+    
+    void main(void) {
+        
+        vec3 diffuseColor = vec3(0.5,0.5,0.5);
+    
+   
+        vec3 basicColor = vec3(0.5,0.5,0.5);
+        vec3 color = 0.0*basicColor + diffuseColor*diffuse;
+        gl_FragColor = texture2D(uTexture, vTexCoord);
+    }
+</script>
+
+
+<script id="ball-vs" type="notjs">
+// specialized shader for the simple cube
+// we assume that the model matrix works as the normal
+//      matrix - this only is try if the model matrix
+//      it a rotate/translate
+//      (uniform scale is OK since we re-normalize)
+// color is solid
+// simple lighting
+    precision highp float;
+
+    attribute vec3 position;
+    attribute vec3 normal;
+    attribute vec2 texcoord;
+    
+    varying vec2 vTexCoord;
+    
+    varying vec4 fNormal;
+    varying vec3 pos;
+    varying float diffuse;
+    
+
+    varying vec3 eyeDirection;
+    
+    uniform mat4 uCamera;
+    uniform mat4 view;
+    uniform mat4 proj;
+    uniform mat4 model;
+    uniform vec3 lightdir;
+    
+    
 
     void main(void) {
         pos = position;
 
         vTexCoord = texcoord;
 
+        eyeDirection = (view*model*vec4(position,1.0)).xyz;  
 
 
         fNormal = normalize(model * vec4(normal,0.0));
@@ -132,24 +196,23 @@
 //  (e.g. the vertex shader figures the lighting
 // note this is used for more than just the cube
     precision highp float;
-    varying vec4 normal;
+    varying vec4 fNormal;
     varying vec3 pos;
     varying float diffuse;
     varying vec2 vTexCoord;
     
-    varying vec3 eyeNormal;
+    varying vec3 eyeDirection;
     
     uniform sampler2D uTexture;
 
     
     void main(void) {
+               
+        vec3 reflectedDirection = normalize(reflect(eyeDirection, fNormal.xyz));
         
-        vec3 diffuseColor = vec3(0.5,0.5,0.5);
-    
-   
-        vec3 basicColor = vec3(0.5,0.5,0.5);
-        vec3 color = 0.0*basicColor + diffuseColor*diffuse;
-        gl_FragColor = texture2D(uTexture, vTexCoord);
+        vec4 texture = texture2D(uTexture, vTexCoord);     
+
+        gl_FragColor = vec4(reflectedDirection*texture.xyz,texture[3]);
     }
 </script>
 

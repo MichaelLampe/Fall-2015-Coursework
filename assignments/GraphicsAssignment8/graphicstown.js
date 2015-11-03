@@ -210,7 +210,6 @@ window.onload = function() {
         var drawingState = {
             gl : gl,
             proj : projM,   // twgl.m4.identity(),
-            
             view : viewM,   // twgl.m4.identity(),
             camera : cameraM,
             timeOfDay : tod,
