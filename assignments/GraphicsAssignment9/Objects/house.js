@@ -18,7 +18,7 @@ var shaderProgram = undefined;
         this.doorLocation = doorLocation;
         this.helipad = true;
         this.helipadAltitude = houseDimensions[1] + houseDimensions[1]*0.5 - 0.5;
-        
+        this.bumpTexture = "images/rocky_bump_map.jpg";
         /*
             Declare buffer here... 
             If you declare it out of scope, the first buffer 
@@ -32,6 +32,9 @@ var shaderProgram = undefined;
         if (!shaderProgram) {
             shaderProgram = twgl.createProgramInfo(gl, ["house-vs", "house-fs"]);
         }
+        this.texture = twgl.createTextures(drawingState.gl, {
+            bump: {src: this.bumpTexture, mag: gl.NEAREST}
+        });
         if (!this.buffers) {
             this.buffers = twgl.createBufferInfoFromArrays(drawingState.gl,this.drawHouse());
         }
@@ -49,7 +52,8 @@ var shaderProgram = undefined;
         twgl.setBuffersAndAttributes(gl,shaderProgram,this.buffers);
         twgl.setUniforms(shaderProgram,{
             view:drawingState.view, proj:drawingState.proj, lightdir:drawingState.sunDirection,
-            model: modelM});
+            model: modelM,
+            uBump: this.texture.bump});
         twgl.drawBufferInfo(gl, gl.TRIANGLES, this.buffers);
     };
     
@@ -73,6 +77,9 @@ var shaderProgram = undefined;
             },
             inColor: {numComponenets: 3,
                 data : []
+            },
+            texCoords: {numComponents: 2,
+                data: []
             }
         };
         
@@ -144,6 +151,14 @@ var shaderProgram = undefined;
                         -1,0,0, -1,0,0, -1,0,0,     -1,0,0, -1,0,0, -1,0,0,
                         1,0,0, 1,0,0, 1,0,0,        1,0,0, 1,0,0, 1,0,0
            );
+           house.texCoords.data.push(
+            0,0,  1,0,  1,1,        0,0,  1,1, 0,1,
+            0,0,  1,0,  1,1,        0,0,  1,1, 0,1,
+            0,0,  1,0,  1,0,        0,0,  1,0, 0,0,
+            0,1,  1,1,  1,1,        0,1,  1,1, 0,1,
+            0,0,  0,1,  0,1,        0,0,  0,1, 0,0,
+            1,0,  1,1,  1,1,        1,0,  1,1, 1,0   
+           )
            for (var i = 0; i < 36; i++){
                house.inColor.data.push(color[0],color[1],color[2]);
            }
