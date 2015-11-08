@@ -91,7 +91,7 @@ window.onload = function() {
         proj : twgl.m4.identity(),
         view : twgl.m4.identity(),
         camera : twgl.m4.identity(),
-        sunDirection : [0,1,0]
+        sunDirection : [1,1,0]
     }
     
 
@@ -204,7 +204,7 @@ window.onload = function() {
         // get lighting information
         var tod = Number(sliders.TimeOfDay.value);
         var sunAngle = Math.PI * (tod-6)/12;
-        var sunDirection = [Math.cos(sunAngle),Math.sin(sunAngle),0];
+        var sunDirection = [Math.cos(sunAngle/2),Math.sin(sunAngle/2),Math.cos(sunAngle/2)];
 
         // make a real drawing state for drawing
         var drawingState = {

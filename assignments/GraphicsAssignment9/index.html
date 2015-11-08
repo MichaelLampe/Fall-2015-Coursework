@@ -83,7 +83,7 @@
     
     void main(void) {
         vec4 fs_normal = 0.5*normal + normal*texture2D(uBump, texcoords);
-        float diffuse = .5 + .5*abs(dot(fs_normal, vec4(lightdir,1.0)));
+        float diffuse = .5 + .5*abs(dot(fs_normal, vec4(lightdir,0.0)));
         gl_FragColor = vec4(outColor*diffuse,1.0);
     }
 </script>
