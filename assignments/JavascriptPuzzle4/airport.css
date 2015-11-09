@@ -1,0 +1,53 @@
+/*
+For the flight widgets
+*/
+.flightButton{
+	width:10vw;
+	height: 20vh;
+	float:left;
+}
+
+.flightWidget{
+	position: relatve;
+	width: 90vw;
+	height: 20vh;
+	color: white;
+	background-color: blue;
+	border: 5px outset white;
+	margin-left: 5vw;
+	margin-right: 5vw;
+	margin-top: 1vh;
+}
+
+.fromto{
+	margin-top: 3%;
+	margin-right: 10%;
+	float:right;
+}
+.arrive{
+	margin-top: 3%;
+	margin-left: 10px;
+	margin-right: 10%;
+	float:right;
+}
+.flight{
+	margin-top: 3%;
+	margin-left:10px;
+	margin-right: 10%;
+	float:right;
+}
+
+
+
+/* 
+General stuff
+*/
+html{
+	margin: 0px;
+	padding: 0px;
+	background-image: url("airplanes.jpg");
+}
+
+body{
+	margin:0px;
+}
