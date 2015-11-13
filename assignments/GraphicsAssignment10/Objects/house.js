@@ -1,4 +1,5 @@
 var grobjects = grobjects || [];
+var houses = [];
 var heloLandingSites = heloLandingSites || [];
 // allow the two constructors to be "leaked" out
 var House = undefined;
@@ -19,6 +20,7 @@ var shaderProgram = undefined;
         this.helipad = true;
         this.helipadAltitude = houseDimensions[1] + houseDimensions[1]*0.5 - 0.5;
         this.bumpTexture = "images/rocky_bump_map.jpg";
+        this.in_beam = false;
         /*
             Declare buffer here... 
             If you declare it out of scope, the first buffer 
@@ -42,6 +44,10 @@ var shaderProgram = undefined;
     House.prototype.draw = function(drawingState) {
         // we make a model matrix to place the cube in the world
         var modelM = twgl.m4.scaling([this.size,this.size,this.size]);
+        
+        if (this.in_beam){
+            this.position = [this.position[0]-0.1,this.position[1]-0.1,this.position[2]-0.1];
+        }
         twgl.m4.setTranslation(modelM,this.position,modelM);
         //twgl.m4.setTranslation(modelM,[0,-0.5,0],modelM);
         // the drawing code is straightforward - since twgl deals with the GL stuff for us
@@ -195,6 +201,7 @@ for (var x = 1; x <= numberOfHouses/8; x++){
         var depth = Math.floor(Math.random()*3 + 1);
         var houseDimensions = [width,height,depth];
         var newHouse = new House(houseName, [-houseGrid*x,0.5,-houseGrid*y], houseSize, houseColors, houseDimensions, doorLocation);
+        houses.push(newHouse);
         grobjects.push(newHouse);
         heloLandingSites.push(newHouse);
     }   
@@ -213,6 +220,7 @@ for (var x = 1; x <= numberOfHouses/8; x++){
         var depth = Math.floor(Math.random()*3 + 1);
         var houseDimensions = [width,height,depth];
         var newHouse = new House(houseName, [houseGrid*x,0.5,-houseGrid*y], houseSize, houseColors, houseDimensions, doorLocation);
+        houses.push(newHouse);
         grobjects.push(newHouse);
         heloLandingSites.push(newHouse);
     }   

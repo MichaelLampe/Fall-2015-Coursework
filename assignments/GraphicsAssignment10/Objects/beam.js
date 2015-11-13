@@ -32,6 +32,16 @@ var Beam = undefined;
         // we make a model matrix to place the cube in the world
         var modelM = twgl.m4.scaling([this.size,this.size,this.size]);
         this.position = [ufo.position[0],ufo.position[1],ufo.position[2]];
+        for (var x = 0; x < houses.length; x++){
+            if (Math.abs(houses[x].position[0] - this.position[0]) < 0.3 ){
+                console.log(houses[x].position[2])
+                console.log(this.position[2])
+                if (Math.abs(houses[x].position[2] - this.position[2]) < 7.0 ){
+                    houses[x].in_beam = true;
+                    x = houses.length;
+                }
+            }
+        }
         twgl.m4.setTranslation(modelM,this.position,modelM);
         twgl.m4.translate(modelM,[0,-this.beam_height/2-1,0], modelM);
         // TODO - Make the beam rotate and make it pull up houses.

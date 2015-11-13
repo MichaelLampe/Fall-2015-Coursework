@@ -32,7 +32,7 @@ var Ufo = undefined;
     Ufo.prototype.draw = function(drawingState) {
         // we make a model matrix to place the cube in the world
         var modelM = twgl.m4.scaling([this.size,this.size,this.size]);
-        this.position = [50*Math.sin(Math.PI*this.move/180),50,10*Math.sin(Math.PI*this.move/180)-100];
+        this.position = [50*Math.sin(Math.PI*this.move/360),50+Math.sin(Math.PI*this.move/360),100*Math.sin(Math.PI*this.move/360)-100];
         twgl.m4.setTranslation(modelM,this.position,modelM);
        
         // the drawing code is straightforward - since twgl deals with the GL stuff for us
