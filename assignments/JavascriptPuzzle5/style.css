@@ -1,0 +1,21 @@
+label {
+  width: 200px;
+  margin-right: 7px;
+}
+
+br {
+  line-height: 2.5em;
+}
+
+input[type="range"] {
+  position: relative;
+  top: 5px;
+}
+
+[disabled] {
+  background-color: #ddd;
+}
+
+hr {
+  margin: 20px 0;
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="style.css">
+<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+  <meta charset="utf-8">
+  <title>JS Bin</title>
+</head>
+<body>
+  <form onsubmit="return false;">
+    <label for="name">Your name:</label>
+    <input type="text" id="name" name="name" /><br />
+    <label for="job">Are you a student?</label>
+    <input type="checkbox" id="job" name="job" />
+    
+    <hr />
+    <div class="studentquestions">
+      <h3>Student questions</h3>
+      <label for="concentration" class="student">Concentration:</label>
+      <select id="concentration" name="concentration" class="student">
+        <option>---</option>
+        <option>Biology</option>
+        <option>Cartography</option>
+        <option>Chemistry</option>
+        <option>Computer Science</option>
+        <option>Electrical Engineering</option>
+        <option>Journalism</option>
+      </select><br />
+      <label for="distance" class="student">How far do you walk a day?</label>
+      <select id="distance" name="distance" class="student">
+        <option>---</option>
+        <option>&lt; 0.5 miles</option>
+        <option>&lt; 1 mile</option>
+        <option>&lt; 1.5 miles</option>
+        <option>&lt; 2 miles</option>
+        <option>&lt; 3 miles</option>
+        <option>&lt; 4 miles</option>
+        <option>&gt;= 4 miles</option>
+      </select><br />
+      <label for="reason" class="student">Does that make you tired?</label>
+      <input type="text" id="reason" name="reason" class="student" />
+    </div>
+    <hr />
+    
+    <div id="nonstudentquestions">
+      <h3>Non-student questions</h3>
+
+      <label for="dust">Does your job have you interact with dust?</label>
+      <input type="checkbox" id="dust" name="dust" class="nonstudent" /><br />
+      <label for="computer">Do you use a desktop computer for your work? (&gt; 35% time)</label>
+      <input type="checkbox" id="computer" name="computer" class="nonstudent" /><br />
+      <label for="reason">Do you like your job?</label>
+      <input type="text" id="jobreason" name="jobreason" class="nonstudent" />
+    </div>
+    
+    <hr />
+    <h3>Conclusion</h3>
+    <label for="likert">Please rate your ability to skip wildly down the street:</label>
+    <input type="range" min="1" max="7" step="1" value="3.5" id="likert" name="likert" /><br />
+    
+    Thank you for filling out this form!<br />
+    <button type="submit">Submit form!</button>
+  </form>
+  <script src="script.js"></script>
+</body>
+</html>
