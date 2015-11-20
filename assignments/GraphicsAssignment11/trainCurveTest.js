@@ -32,6 +32,7 @@ function makeCheckBox(name, appendTo, callback) {
 
 //
 window.onload = function() {
+    var curve = 2;
     "use strict";
     var body = document.body;
     var width = 600;
@@ -45,11 +46,12 @@ window.onload = function() {
     //
     // the important part: set up the two main things in the train
     var ttc = new TrainTimeController(width,body,4);
+    // Add the dots to the canvas
     var dw = new DotWindow(canvas, [ [100,300], [100,100], [300,100], [300,300]]);
 
     var cc = new CurveCache();
-    cc.control_points = dw.points;
-    cc.resample();
+    cc.controlPoints = dw.points;
+    cc.resample(curve);
 
     // control panel
     // this sets up a control panel that has various things for alterning parameters
@@ -68,7 +70,7 @@ window.onload = function() {
     // this wires the pieces together
     // when a dot is changed, recompute the curve (and make sure the timeline is right)
     // when the time changes, redraw (so the train moves)
-    dw.onChange.push(function(dw) {cc.resample(); ttc.setMax(dw.points.length)});
+    dw.onChange.push(function(dw) {cc.resample(curve); ttc.setMax(dw.points.length)});
     ttc.onchange.push(function() {dw.scheduleRedraw();});
 
     // this draws the train and track
@@ -89,7 +91,7 @@ window.onload = function() {
             ctx.linewidth = 2;
             ctx.beginPath();
             var last = cc.samples.length-1;
-            ctx.moveTo(cc.samples[last][0],cc.samples[last][1]);
+            ctx.moveTo(cc.samples[0][0],cc.samples[0][1]);
             cc.samples.forEach(function (e, i) {
                 ctx.lineTo(e[0],e[1]);
             });
@@ -98,8 +100,8 @@ window.onload = function() {
         }
 
         var t = ttc.getTime();
-        var pos = cc.eval(arclen.checked ? cc.arclenToU(t,true) : t );
-
+        //var pos = cc.eval(arclen.checked ? cc.arclenToU(t,true) : t );
+        var pos = cc.eval(t,curve);
         ctx.save();
         ctx.translate(pos[0],pos[1]);
         ctx.beginPath();
